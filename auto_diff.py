@@ -147,7 +147,7 @@ class PlaceholderOp(Op):
             "Placeholder nodes have no inputs, and there values cannot be computed."
         )
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         raise RuntimeError("Placeholder nodes have no inputs.")
 
 
@@ -166,7 +166,7 @@ class AddOp(Op):
         assert len(input_values) == 2
         return input_values[0] + input_values[1]
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of add node, return partial adjoint to each input."""
         return [output_grad, output_grad]
 
@@ -187,7 +187,7 @@ class AddByConstOp(Op):
         assert len(input_values) == 1
         return input_values[0] + node.constant
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of add node, return partial adjoint to the input."""
         return [output_grad]
 
@@ -206,7 +206,7 @@ class MulOp(Op):
         """Return the element-wise multiplication of input values."""
         """TODO: Your code here"""
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of multiplication node, return partial adjoint to each input."""
         """TODO: Your code here"""
 
@@ -226,7 +226,7 @@ class MulByConstOp(Op):
         """Return the element-wise multiplication of the input value and the constant."""
         """TODO: Your code here"""
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of multiplication node, return partial adjoint to the input."""
         """TODO: Your code here"""
 
@@ -245,7 +245,7 @@ class DivOp(Op):
         """Return the element-wise division of input values."""
         """TODO: Your code here"""
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of division node, return partial adjoint to each input."""
         """TODO: Your code here"""
 
@@ -265,7 +265,7 @@ class DivByConstOp(Op):
         """Return the element-wise division of the input value and the constant."""
         """TODO: Your code here"""
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of division node, return partial adjoint to the input."""
         """TODO: Your code here"""
 
@@ -312,7 +312,7 @@ class MatMulOp(Op):
         """
         """TODO: Your code here"""
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         """Given gradient of matmul node, return partial adjoint to each input.
 
         Note
@@ -337,7 +337,7 @@ class ZerosLikeOp(Op):
         assert len(input_values) == 1
         return np.zeros(input_values[0].shape)
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         return [zeros_like(node.inputs[0])]
 
 
@@ -352,7 +352,7 @@ class OnesLikeOp(Op):
         assert len(input_values) == 1
         return np.ones(input_values[0].shape)
 
-    def gradient(self, node: Node, output_grad: Node) -> Node:
+    def gradient(self, node: Node, output_grad: Node) -> List[Node]:
         return [zeros_like(node.inputs[0])]
 
 
